@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.2.2 (Python 3.7.9 on win32)" generated="20220824 21:30:53.186" rpa="false">
+<suite id="s1" name="Weather Service TestSuite" source="C:\GIT_REPO\API_Test_WithSecure\Weather_Service_Tests\Weather_Service_TestSuite.robot">
+<test id="s1-t1" name="TC_Get_weather_with_valid_token">
+<kw name="Verify that weather is returned if token is valid" library="Weather">
+<kw name="Create a new User" library="resource">
+<assign>
+<var>${username}</var>
+</assign>
+<kw name="Generate Random String" library="String">
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<arguments>
+<arg>8</arg>
+<arg>[LETTERS][NUMBERS]</arg>
+</arguments>
+<assign>
+<var>${name}</var>
+</assign>
+<msg timestamp="20220824 21:30:53.469" level="INFO">${name} = guzI4I9m</msg>
+<status status="PASS" starttime="20220824 21:30:53.469" endtime="20220824 21:30:53.469"></status>
+</kw>
+<kw name="Generate Random String" library="String">
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<arguments>
+<arg>8</arg>
+<arg>[LETTERS][NUMBERS]</arg>
+</arguments>
+<assign>
+<var>${password}</var>
+</assign>
+<msg timestamp="20220824 21:30:53.470" level="INFO">${password} = tpopZsty</msg>
+<status status="PASS" starttime="20220824 21:30:53.470" endtime="20220824 21:30:53.470"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>Please save it. This is visible only once. If you forget please regenerate token</arg>
+</arguments>
+<assign>
+<var>${Details}</var>
+</assign>
+<msg timestamp="20220824 21:30:53.471" level="INFO">${Details} = Please save it. This is visible only once. If you forget please regenerate token</msg>
+<status status="PASS" starttime="20220824 21:30:53.470" endtime="20220824 21:30:53.471"></status>
+</kw>
+<kw name="Sign up a user" library="resource">
+<arguments>
+<arg>${name}</arg>
+<arg>${password}</arg>
+<arg>200</arg>
+<arg>${Details}</arg>
+</arguments>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>userLogin</arg>
+<arg>${BASE_URL_SignUpService}</arg>
+</arguments>
+<msg timestamp="20220824 21:30:53.473" level="INFO">Creating Session using : alias=userLogin, url=http://127.0.0.1:8001/api/v1/signupsrv/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220824 21:30:53.473" endtime="20220824 21:30:53.474"></status>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>userLogin</arg>
+<arg>url=/signup</arg>
+<arg>params=name=${userName}&amp;passwd=${password}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20220824 21:30:53.553" level="INFO">POST Request : url=http://127.0.0.1:8001/api/v1/signupsrv/signup?name=guzI4I9m&amp;passwd=tpopZsty 
+ path_url=/api/v1/signupsrv/signup?name=guzI4I9m&amp;passwd=tpopZsty 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20220824 21:30:53.553" level="INFO">POST Response : url=http://127.0.0.1:8001/api/v1/signupsrv/signup?name=guzI4I9m&amp;passwd=tpopZsty 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 24 Aug 2022 18:30:53 GMT', 'server': 'uvicorn', 'content-length': '124', 'content-type': 'application/json'} 
+ body="token: 41dae4cb07a1513e92bd225595cc76f7\n Please save it. This is visible only once. If you forget please regenerate token" 
+ </msg>
+<msg timestamp="20220824 21:30:53.554" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220824 21:30:53.474" endtime="20220824 21:30:53.554"></status>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<doc>Fails if response status code is different than the expected.</doc>
+<arguments>
+<arg>${status_code}</arg>
+</arguments>
+<status status="PASS" starttime="20220824 21:30:53.554" endtime="20220824 21:30:53.555"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<assign>
+<var>${output}</var>
+</assign>
+<msg timestamp="20220824 21:30:53.557" level="INFO">${output} = "token: 41dae4cb07a1513e92bd225595cc76f7\n Please save it. This is visible only once. If you forget please regenerate token"</msg>
+<status status="PASS" starttime="20220824 21:30:53.556" endtime="20220824 21:30:53.557"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${output}</arg>
+<arg>${Details}</arg>
+</arguments>
+<status status="PASS" starttime="20220824 21:30:53.558" endtime="20220824 21:30:53.558"></status>
+</kw>
+<status status="PASS" starttime="20220824 21:30:53.472" endtime="20220824 21:30:53.559"></status>
+</kw>
+<msg timestamp="20220824 21:30:53.560" level="INFO">${username} = guzI4I9m</msg>
+<status status="PASS" starttime="20220824 21:30:53.468" endtime="20220824 21:30:53.560"></status>
+</kw>
+<kw name="Get token of the user" library="resource">
+<arguments>
+<arg>${username}</arg>
+</arguments>
+<assign>
+<var>${token}</var>
+</assign>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>renewToken</arg>
+<arg>${BASE_URL_SignUpService}</arg>
+</arguments>
+<msg timestamp="20220824 21:30:53.564" level="INFO">Creating Session using : alias=renewToken, url=http://127.0.0.1:8001/api/v1/signupsrv/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220824 21:30:53.563" endtime="20220824 21:30:53.565"></status>
+</kw>
+<kw name="PATCH On Session" library="RequestsLibrary">
+<doc>Sends a PATCH request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>renewToken</arg>
+<arg>url=/renew</arg>
+<arg>params=name=${userName}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20220824 21:30:53.639" level="INFO">PATCH Request : url=http://127.0.0.1:8001/api/v1/signupsrv/renew?name=guzI4I9m 
+ path_url=/api/v1/signupsrv/renew?name=guzI4I9m 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20220824 21:30:53.639" level="INFO">PATCH Response : url=http://127.0.0.1:8001/api/v1/signupsrv/renew?name=guzI4I9m 
+ status=200, reason=OK 
+ headers={'date': 'Wed, 24 Aug 2022 18:30:53 GMT', 'server': 'uvicorn', 'content-length': '86', 'content-type': 'application/json'} 
+ body="token: 7dfe9a86829c197dd88bd47d7a5beb28\n Please save it. This is visible only once." 
+ </msg>
+<msg timestamp="20220824 21:30:53.639" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220824 21:30:53.565" endtime="20220824 21:30:53.639"></status>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<doc>Fails if response status code is different than the expected.</doc>
+<arguments>
+<arg>200</arg>
+</arguments>
+<status status="PASS" starttime="20220824 21:30:53.639" endtime="20220824 21:30:53.640"></status>
+</kw>
+<kw name="Get Substring" library="String">
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<arguments>
+<arg>${response.content}</arg>
+<arg>8</arg>
+<arg>40</arg>
+</arguments>
+<assign>
+<var>${token}</var>
+</assign>
+<msg timestamp="20220824 21:30:53.640" level="INFO">${token} = 7dfe9a86829c197dd88bd47d7a5beb28</msg>
+<status status="PASS" starttime="20220824 21:30:53.640" endtime="20220824 21:30:53.640"></status>
+</kw>
+<msg timestamp="20220824 21:30:53.641" level="INFO">${token} = 7dfe9a86829c197dd88bd47d7a5beb28</msg>
+<status status="PASS" starttime="20220824 21:30:53.560" endtime="20220824 21:30:53.641"></status>
+</kw>
+<kw name="Get Weather" library="Weather">
+<arguments>
+<arg>${token}</arg>
+<arg>200</arg>
+</arguments>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>weatherSession</arg>
+<arg>${BASE_URL_WeatherService}</arg>
+</arguments>
+<msg timestamp="20220824 21:30:53.642" level="INFO">Creating Session using : alias=weatherSession, url=http://127.0.0.1:8080/api/v1/weathersrv/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220824 21:30:53.642" endtime="20220824 21:30:53.642"></status>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>weatherSession</arg>
+<arg>url=/weather</arg>
+<arg>params=token=${token}</arg>
+<arg>expected_status=${status_code}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20220824 21:30:53.707" level="INFO">GET Request : url=http://127.0.0.1:8080/api/v1/weathersrv/weather?token=7dfe9a86829c197dd88bd47d7a5beb28 
+ path_url=/api/v1/weathersrv/weather?token=7dfe9a86829c197dd88bd47d7a5beb28 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20220824 21:30:53.708" level="INFO">GET Response : url=http://127.0.0.1:8080/api/v1/weathersrv/weather?token=7dfe9a86829c197dd88bd47d7a5beb28 
+ status=200, reason=OK 
+ headers={'Server': 'nginx/1.23.1', 'Date': 'Wed, 24 Aug 2022 18:30:53 GMT', 'Content-Type': 'application/json', 'Content-Length': '5', 'Connection': 'keep-alive'} 
+ body="Hot" 
+ </msg>
+<msg timestamp="20220824 21:30:53.708" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220824 21:30:53.643" endtime="20220824 21:30:53.708"></status>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<doc>Fails if response status code is different than the expected.</doc>
+<arguments>
+<arg>${status_code}</arg>
+</arguments>
+<status status="PASS" starttime="20220824 21:30:53.709" endtime="20220824 21:30:53.709"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${response.content}</arg>
+</arguments>
+<status status="PASS" starttime="20220824 21:30:53.710" endtime="20220824 21:30:53.711"></status>
+</kw>
+<status status="PASS" starttime="20220824 21:30:53.641" endtime="20220824 21:30:53.711"></status>
+</kw>
+<status status="PASS" starttime="20220824 21:30:53.465" endtime="20220824 21:30:53.712"></status>
+</kw>
+<doc>This test case verifies that weather is returned for the given token</doc>
+<tags>
+<tag>Weather</tag>
+</tags>
+<status status="PASS" starttime="20220824 21:30:53.451" endtime="20220824 21:30:53.714" critical="yes"></status>
+</test>
+<test id="s1-t2" name="TC_Weather_not_returned_with_invalid_token">
+<kw name="Verify that weather is not returned if token in invalid" library="Weather">
+<kw name="Get Weather" library="Weather">
+<arguments>
+<arg>somerandomtoken</arg>
+<arg>401</arg>
+</arguments>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>weatherSession</arg>
+<arg>${BASE_URL_WeatherService}</arg>
+</arguments>
+<msg timestamp="20220824 21:30:53.728" level="INFO">Creating Session using : alias=weatherSession, url=http://127.0.0.1:8080/api/v1/weathersrv/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220824 21:30:53.728" endtime="20220824 21:30:53.730"></status>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>weatherSession</arg>
+<arg>url=/weather</arg>
+<arg>params=token=${token}</arg>
+<arg>expected_status=${status_code}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20220824 21:30:53.778" level="INFO">GET Request : url=http://127.0.0.1:8080/api/v1/weathersrv/weather?token=somerandomtoken 
+ path_url=/api/v1/weathersrv/weather?token=somerandomtoken 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20220824 21:30:53.778" level="INFO">GET Response : url=http://127.0.0.1:8080/api/v1/weathersrv/weather?token=somerandomtoken 
+ status=200, reason=OK 
+ headers={'Server': 'nginx/1.23.1', 'Date': 'Wed, 24 Aug 2022 18:30:53 GMT', 'Content-Type': 'application/json', 'Content-Length': '6', 'Connection': 'keep-alive'} 
+ body="Mist" 
+ </msg>
+<msg timestamp="20220824 21:30:53.784" level="FAIL">Url: http://127.0.0.1:8080/api/v1/weathersrv/weather?token=somerandomtoken Expected status: 200 != 401</msg>
+<status status="FAIL" starttime="20220824 21:30:53.731" endtime="20220824 21:30:53.784"></status>
+</kw>
+<status status="FAIL" starttime="20220824 21:30:53.725" endtime="20220824 21:30:53.784"></status>
+</kw>
+<status status="FAIL" starttime="20220824 21:30:53.725" endtime="20220824 21:30:53.785"></status>
+</kw>
+<doc>This test case verifies that weather is not returned for the given token</doc>
+<tags>
+<tag>Weather</tag>
+</tags>
+<status status="FAIL" starttime="20220824 21:30:53.723" endtime="20220824 21:30:53.785" critical="yes">Url: http://127.0.0.1:8080/api/v1/weathersrv/weather?token=somerandomtoken Expected status: 200 != 401</status>
+</test>
+<test id="s1-t3" name="TC_Weather_not_Returned_with_invalid_input">
+<kw name="Verify that weather is not returned if whitespace is entered" library="Weather">
+<kw name="Get Weather" library="Weather">
+<arguments>
+<arg>" "</arg>
+<arg>401</arg>
+</arguments>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>weatherSession</arg>
+<arg>${BASE_URL_WeatherService}</arg>
+</arguments>
+<msg timestamp="20220824 21:30:53.795" level="INFO">Creating Session using : alias=weatherSession, url=http://127.0.0.1:8080/api/v1/weathersrv/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220824 21:30:53.794" endtime="20220824 21:30:53.795"></status>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>weatherSession</arg>
+<arg>url=/weather</arg>
+<arg>params=token=${token}</arg>
+<arg>expected_status=${status_code}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20220824 21:30:53.857" level="INFO">GET Request : url=http://127.0.0.1:8080/api/v1/weathersrv/weather?token=%22%20%22 
+ path_url=/api/v1/weathersrv/weather?token=%22%20%22 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20220824 21:30:53.857" level="INFO">GET Response : url=http://127.0.0.1:8080/api/v1/weathersrv/weather?token=%22%20%22 
+ status=200, reason=OK 
+ headers={'Server': 'nginx/1.23.1', 'Date': 'Wed, 24 Aug 2022 18:30:53 GMT', 'Content-Type': 'application/json', 'Content-Length': '7', 'Connection': 'keep-alive'} 
+ body="Windy" 
+ </msg>
+<msg timestamp="20220824 21:30:53.858" level="FAIL">Url: http://127.0.0.1:8080/api/v1/weathersrv/weather?token=%22%20%22 Expected status: 200 != 401</msg>
+<status status="FAIL" starttime="20220824 21:30:53.796" endtime="20220824 21:30:53.859"></status>
+</kw>
+<status status="FAIL" starttime="20220824 21:30:53.793" endtime="20220824 21:30:53.859"></status>
+</kw>
+<status status="FAIL" starttime="20220824 21:30:53.792" endtime="20220824 21:30:53.859"></status>
+</kw>
+<doc>This test case verifies that weather is not returned for the given token</doc>
+<tags>
+<tag>Weather</tag>
+</tags>
+<status status="FAIL" starttime="20220824 21:30:53.790" endtime="20220824 21:30:53.867" critical="yes">Url: http://127.0.0.1:8080/api/v1/weathersrv/weather?token=%22%20%22 Expected status: 200 != 401</status>
+</test>
+<test id="s1-t4" name="TC_Weather_not_returned_when_special_character_is_entered">
+<kw name="Verify that weather is not returned if special character is entered" library="Weather">
+<kw name="Get Weather" library="Weather">
+<arguments>
+<arg>@£$</arg>
+<arg>401</arg>
+</arguments>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>weatherSession</arg>
+<arg>${BASE_URL_WeatherService}</arg>
+</arguments>
+<msg timestamp="20220824 21:30:53.874" level="INFO">Creating Session using : alias=weatherSession, url=http://127.0.0.1:8080/api/v1/weathersrv/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20220824 21:30:53.874" endtime="20220824 21:30:53.874"></status>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<arguments>
+<arg>weatherSession</arg>
+<arg>url=/weather</arg>
+<arg>params=token=${token}</arg>
+<arg>expected_status=${status_code}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20220824 21:30:53.926" level="INFO">GET Request : url=http://127.0.0.1:8080/api/v1/weathersrv/weather?token=@%C2%A3$ 
+ path_url=/api/v1/weathersrv/weather?token=@%C2%A3$ 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20220824 21:30:53.927" level="INFO">GET Response : url=http://127.0.0.1:8080/api/v1/weathersrv/weather?token=@%C2%A3$ 
+ status=200, reason=OK 
+ headers={'Server': 'nginx/1.23.1', 'Date': 'Wed, 24 Aug 2022 18:30:53 GMT', 'Content-Type': 'application/json', 'Content-Length': '7', 'Connection': 'keep-alive'} 
+ body="Windy" 
+ </msg>
+<msg timestamp="20220824 21:30:53.928" level="FAIL">Url: http://127.0.0.1:8080/api/v1/weathersrv/weather?token=@%C2%A3$ Expected status: 200 != 401</msg>
+<status status="FAIL" starttime="20220824 21:30:53.875" endtime="20220824 21:30:53.928"></status>
+</kw>
+<status status="FAIL" starttime="20220824 21:30:53.873" endtime="20220824 21:30:53.928"></status>
+</kw>
+<status status="FAIL" starttime="20220824 21:30:53.872" endtime="20220824 21:30:53.929"></status>
+</kw>
+<doc>This test case verifies that weather is not returned for the given token</doc>
+<tags>
+<tag>Weather</tag>
+</tags>
+<status status="FAIL" starttime="20220824 21:30:53.870" endtime="20220824 21:30:53.929" critical="yes">Url: http://127.0.0.1:8080/api/v1/weathersrv/weather?token=@%C2%A3$ Expected status: 200 != 401</status>
+</test>
+<status status="FAIL" starttime="20220824 21:30:53.189" endtime="20220824 21:30:53.934"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="3">Critical Tests</stat>
+<stat pass="1" fail="3">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="3">Weather</stat>
+</tag>
+<suite>
+<stat pass="1" fail="3" id="s1" name="Weather Service TestSuite">Weather Service TestSuite</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
